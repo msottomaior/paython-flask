@@ -3,10 +3,10 @@ import mysql.connector
 def getDB():
 
     flaskDB = mysql.connector.connect(
-        host='127.0.0.1',
-        user='root',
-        password='Pirple',
-        database='flask_pirple',
+        host='',
+        user='',
+        password='',
+        database='',
         auth_plugin='mysql_native_password'
     )
     return flaskDB
