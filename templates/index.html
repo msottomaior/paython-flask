@@ -1,0 +1,23 @@
+{% extends "structure.html" %} 
+{% block header %}
+    <h2>This is the homepage</h2>
+{% endblock header %}
+
+{% block main %} 
+<div class="container">
+    <form action="/login" method="POST">
+        <input placeholder="E-mail" name="email" type="email">
+        <input placeholder="Password" name="pass" type="password">
+        <input type="submit">
+    </form>    
+</div>
+<br/>
+<div class="topnav">
+    <a href="/signup" class="active">Sign up</a>
+    <a href="/about">About</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+  </div> 
+<br/>
+<p>{{ message }}</p>
+{% endblock main %}

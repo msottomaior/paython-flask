@@ -1,0 +1,8 @@
+{% extends "dashboard.html" %} 
+{% block dashboard %}
+<form action="/login" method="POST">
+  <input placeholder="E-mail" name="email" type="email">
+  <input placeholder="Password" name="pass" type="password">
+  <input type="submit">
+</form>    
+{% endblock dashboard %}

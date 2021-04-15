@@ -1,0 +1,21 @@
+{% extends "structure.html" %}
+
+{% block header %}
+<h1>ToDo List</h1>
+<div class="topnav">
+    <a href="/new_task" class="active">New task</a>
+    <a href="/delete_task">Delete task</a>
+    <a href="/update_task">Update task</a>
+  </div> 
+<br/>
+{% endblock header %}
+{% block main %}
+
+<p>{{ message }}</p>
+<br/>
+<a href="/logout">Log out here!</a>
+
+{% endblock main %}
+<div>
+    {% block dashboard %} {% endblock dashboard %}
+</div>
