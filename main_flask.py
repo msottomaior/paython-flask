@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
-import dao_user, model_users
+import dao_user, dao_task, model_users, model_todo
 
 app = Flask(__name__)
 app.secret_key = 'qAz90CoNuSuvivaf8PkebdDFFRg9q9+8NYvzdObZBUU='
@@ -67,6 +67,13 @@ def sigunp():
 
         message = dao_user.create_user(user)
         return render_template('index.html', message = message)
+
+@app.route('/new_task', methods=['POST'])
+def new_task():
+    task = model_todo.Todo(g.userid, request.form['from_date'], request.form['task'])
+    message = dao_task.create_task(task)
+
+    return render_template('dashboard.html', message = message)
 
 @app.route('/logout')
 def logout():

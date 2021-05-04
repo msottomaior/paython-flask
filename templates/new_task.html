@@ -1,1 +1,12 @@
 {% extends "structure.html" %} 
+{% block main %} 
+<div class="container">
+    <form action="/" method="POST">
+        <input placeholder="Date" name="from_date" type="date">
+        <input placeholder="Task" name="task" type="textarea">
+        <input type="submit">
+    </form>    
+</div>
+<br/>
+
+{% endblock main %}
