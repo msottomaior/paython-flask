@@ -1,11 +1,12 @@
 import config_db
 import model_users
+#from main_flask import db
 
 
 
-def load_DB():
-    flaskDB = config_db.getDB()
-    return flaskDB
+# def load_DB():
+#     flaskDB = config_db.getDB()
+#     return flaskDB
 
 # Check user and return user as object from model
 def check_pw(username, password):
@@ -26,22 +27,30 @@ def check_pw(username, password):
 
 # Sign up
 def create_user(user):
-    flask_db = load_DB()
-    mycursor = flask_db.cursor()
-    sql_query = "SELECT pass FROM users WHERE email = %s"
-    user_info = (user.email,)
 
-    mycursor.execute(sql_query, user_info)
-    db_user = mycursor.fetchone()
+    
 
+    # flask_db = load_DB()
+    # mycursor = flask_db.cursor()
+    # sql_query = "SELECT pass FROM users WHERE email = %s"
+    # user_info = (user.email,)
+
+    # mycursor.execute(sql_query, user_info)
+    # db_user = mycursor.fetchone()
+
+    db_user = model_users.Users.query.filter_by(email=user.email).first()
     if db_user is None:
-        sql_query = "INSERT INTO users (email, pass, name, address) VALUES (%s,%s,%s,%s)"
-        values = (user.email, user.password, user.name, user.address)
-        mycursor.execute(sql_query, values)
+        model_users.db.session.add(user)
+        model_users.db.session.commit()
 
-        flask_db.commit()
-        mycursor.close()
-        flask_db.close()
+    # if db_user is None:
+    #     sql_query = "INSERT INTO users (email, pass, name, address) VALUES (%s,%s,%s,%s)"
+    #     values = (user.email, user.password, user.name, user.address)
+    #     mycursor.execute(sql_query, values)
+
+    #     flask_db.commit()
+    #     mycursor.close()
+    #     flask_db.close()
     else:
         return ('User already existed!!!')
 

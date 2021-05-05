@@ -1,13 +1,16 @@
 import config_db
 import model_users
+#from main_flask import db
 
 
-def load_DB():
-    flaskDB = config_db.getDB()
-    return flaskDB
+# def load_DB():
+#     flaskDB = config_db.getDB()
+#     return flaskDB
 
 
 def create_task(task):
+
+
     flask_db = load_DB()
     mycursor = flask_db.cursor()
 

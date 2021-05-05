@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
-import dao_user, dao_task, model_users, model_todo
+#from flask_sqlalchemy import SQLAlchemy
+#import dao_user, dao_task, model_users, model_todo
+import dao_user, dao_task, model_todo, model_users
+#from model_users import db
 
 app = Flask(__name__)
 app.secret_key = 'qAz90CoNuSuvivaf8PkebdDFFRg9q9+8NYvzdObZBUU='
-
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Pirple@localhost/flask_pirple'
+#sdb = SQLAlchemy(app)
+model_users.db.init_app(app)
 
 @app.before_request
 def before_first_request():
@@ -61,9 +65,10 @@ def sigunp():
     else:
         user = model_users.Users()
         user.email = request.form['email']
-        user.password = request.form['pass']
+        user.passwd = request.form['pass']
         user.name = request.form['name']
         user.address = request.form['address']
+        
 
         message = dao_user.create_user(user)
         return render_template('index.html', message = message)
