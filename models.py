@@ -14,7 +14,7 @@ class Users(db.Model):
     todos = db.relationship('Todo', backref='users', lazy=True)
 
 class Todo(db.Model):
-
+    __tablename__ = 'todo'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)

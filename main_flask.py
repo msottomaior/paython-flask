@@ -1,14 +1,14 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 #from flask_sqlalchemy import SQLAlchemy
-#import dao_user, dao_task, model_users, model_todo
-import dao_user, dao_task, model_todo, model_users
-#from model_users import db
+#import dao_user, dao_task, models, model_todo
+import dao_user, dao_task, model_todo, models
+#from models import db
 
 app = Flask(__name__)
 app.secret_key = 'qAz90CoNuSuvivaf8PkebdDFFRg9q9+8NYvzdObZBUU='
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Pirple@localhost/flask_pirple'
 #sdb = SQLAlchemy(app)
-model_users.db.init_app(app)
+models.db.init_app(app)
 
 @app.before_request
 def before_first_request():
@@ -63,7 +63,7 @@ def sigunp():
         message = 'Please sign up!'
         return render_template('signup.html', message = message)
     else:
-        user = model_users.Users()
+        user = models.Users()
         user.email = request.form['email']
         user.passwd = request.form['pass']
         user.name = request.form['name']
@@ -73,12 +73,19 @@ def sigunp():
         message = dao_user.create_user(user)
         return render_template('index.html', message = message)
 
-@app.route('/new_task', methods=['POST'])
+@app.route('/new_task', methods=['GET','POST'])
 def new_task():
-    task = model_todo.Todo(g.userid, request.form['from_date'], request.form['task'])
-    message = dao_task.create_task(task)
+    if (request.method == 'GET'):
+        return render_template('new_task.html')
+    else:
+        task = models.Todo()
+        task.user_id = g.userid
+        task.from_date = request.form['from_date']
+        task.task = request.form['task']
+        
+        message = dao_task.create_task(task)
 
-    return render_template('dashboard.html', message = message)
+        return render_template('dashboard.html', message = message)
 
 @app.route('/logout')
 def logout():
